@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"strconv"
+	"math"
 )
 
 func isPrime(x int) bool{ // Used in countPrimes; Returns true if the given number is a Prime Number
@@ -133,6 +134,20 @@ func (t *Time24) AddOneHour(){
 	}
 }
 
+func allBitSeqs(n int) [][]int{
+	var bitSeqs [][]int
+	numOfBin := int(math.Pow(2,float64(n))) // The total number of binary sequences that will need to be appeneded on to bitSeqs
+	fmt.Println(numOfBin)
+	for x:=0 ; x<numOfBin ; x++{
+		var row []int
+		for y:=0 ; y<n ; y++{
+			row = append(row, 0)
+		}
+		bitSeqs = append(bitSeqs, row)
+	}
+	return bitSeqs
+}
+
 func main() {
 	// Question 1
 	/*
@@ -183,8 +198,10 @@ func main() {
 	fmt.Println( lessThanTime24(valid_time, invalid_time) )
 	fmt.Println( lessThanTime24(invalid_time, valid_time) )
 	*/
-	times := []Time24{valid_time, invalid_time, smallest_time}
 	
+	/*
+	times := []Time24{valid_time, invalid_time, smallest_time}
+		
 	var retSmallestTime Time24
 	var errMsg error
 	
@@ -195,4 +212,13 @@ func main() {
 	fmt.Println(valid_time.String())
 	valid_time.AddOneHour()
 	fmt.Println(valid_time.String())
+	*/
+	
+	test := [][]int{}
+	row1 := []int{1,2,3}
+	row2 := []int{4,5,6}
+	test = append(test,row1)
+	test = append(test,row2)
+	
+	fmt.Println(allBitSeqs(2))
 }
