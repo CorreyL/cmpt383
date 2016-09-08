@@ -1,6 +1,7 @@
 package main
 import (
 	"fmt"
+	"strings"
 	"io/ioutil"
 )
 
@@ -27,41 +28,42 @@ func countPrimes(x int) int{
 }
 
 func countStrings(filename string) map[string]int{
-	var m map[string]int
+	m := make(map[string]int)
 	b, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Print(err)
 	}
 	str := string(b)
-	var current string
-	current = ""
-	for a:=0;a<len(str);a++{
-		if(string(str[a]) != string(" ") || string(str[a]) != string("\n")){
-			current = current + string(str[a])
-			fmt.Println(current)
-		} else {
-			fmt.Println(current)
-			if(m[current] == 0){
-				m[current] = 1
-			} else{
-				m[current] = m[current] + 1
-			}
-			current = ""
+	var words []string
+	words = strings.Fields(str)
+	for _,element := range words{
+		if(m[element] == 0){
+			m[element] = 1
+		} else{
+			m[element] = m[element] + 1
 		}
 	}
 	return m
 }
 
 func main() {
+	// Question 1
 	/*
 	fmt.Println("Input a number for countPrimes()")
 	var user_input int 
 	fmt.Scan(&user_input)
   fmt.Println(countPrimes(user_input)) 
 	*/
+	// Question 2
 	fmt.Printf("{")
-	for x, y := range countStrings("textfile.txt") { 
-		fmt.Printf(x, ":",y)
+	m := countStrings("textfile.txt")
+	len_check := 0 // Ensures that the string ", " is not printed for the final pair
+	for x, y := range m { 
+		fmt.Print("\"",x,"\"",":", y)
+		if(len_check != len(m)-1){
+			fmt.Print(", ")
+		}
+		len_check++
 	}
 	fmt.Printf("}")
 }
