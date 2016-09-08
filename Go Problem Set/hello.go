@@ -2,6 +2,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"errors"
 	"io/ioutil"
 )
 
@@ -49,6 +50,9 @@ func countStrings(filename string) map[string]int{ // Returns a map where each p
 type Time24 struct {
     hour, minute, second uint8
 }
+// 0 <= hour < 24
+// 0 <= minute < 60
+// 0 <= second < 60
 
 func validTime24(time Time24) bool{
 	if( (0 <= time.hour && time.hour < 24) && (0 <= time.minute && time.minute < 60) && (0 <= time.second && time.second < 60) ){
@@ -65,7 +69,48 @@ func equalsTime24(a Time24, b Time24) bool{
 }
 
 func lessThanTime24(a Time24, b Time24) bool{
-	
+	if( (a.hour <= b.hour) ){
+		if( a.hour != b.hour ){
+			return true
+		} else {
+			if ( a.minute <= b.minute ){
+				if( a.minute != b.minute ){
+					return true
+				}	else {
+					if( a.second < b.second ){
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
+func minTime24(times []Time24) (Time24, error){
+	var noError error
+	noError = errors.New("")
+	if(len(times) == 0){
+		var zeroTime Time24
+		var err error
+		
+		zeroTime.hour = 0
+		zeroTime.minute = 0
+		zeroTime.second = 0
+		
+		err = errors.New("The argument passed in is empty.")
+		
+		return zeroTime, err
+	} else if(len(times) == 1){
+		return times[0], noError
+	}
+	track := 0
+	for x := 1; x<len(times);x++{
+		if( !lessThanTime24( times[track], times[x] ) ){
+			track = x
+		}
+	}
+	return times[track], noError
 }
 
 func main() {
@@ -93,6 +138,7 @@ func main() {
 	var valid_time Time24
 	var valid_time2 Time24
 	var invalid_time Time24
+	var smallest_time Time24
 	
 	valid_time.hour = 12 // All values within the range to be a valid time
 	valid_time.minute = 30
@@ -106,6 +152,24 @@ func main() {
 	valid_time2.minute = 30
 	valid_time2.second = 45
 	
+	smallest_time.hour = 1
+	smallest_time.minute = 1
+	smallest_time.second = 1
+	
+	/*
 	fmt.Println( equalsTime24(valid_time, valid_time2) )
 	fmt.Println( equalsTime24(valid_time, invalid_time) )
+	
+	fmt.Println( lessThanTime24(valid_time, invalid_time) )
+	fmt.Println( lessThanTime24(invalid_time, valid_time) )
+	*/
+	times := []Time24{valid_time, invalid_time, smallest_time}
+	
+	var retSmallestTime Time24
+	var errMsg error
+	
+	retSmallestTime, errMsg = minTime24(times)
+	
+	fmt.Println(retSmallestTime.hour, retSmallestTime.minute, retSmallestTime.second)
+	fmt.Println(errMsg)
 }
