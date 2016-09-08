@@ -134,16 +134,32 @@ func (t *Time24) AddOneHour(){
 	}
 }
 
+func binBitSeq(num int, size int) []int{
+	var BitSeq []int
+	BinaryVal := string(strconv.FormatInt(int64(num), 2)) // Determines the binary sequence of the value passed in; returned as a string
+	numTrailZero := size - len(BinaryVal) // Need to determine how many trailing zeroes we need to add according to the size of the binary sequence
+	for x := 0 ; x<numTrailZero ; x++{ // Adding the necessary number of trailing zeroes
+		BitSeq = append(BitSeq, 0) 
+	}
+	for x := 0 ; x<len(BinaryVal) ; x++{ // Appends the string of BinaryVal to BitSeq []int
+		var val int
+		var err error
+		val, err = strconv.Atoi(string(BinaryVal[x]))
+		if( err == nil ){
+			BitSeq = append( BitSeq, val )
+		}
+	}
+	return BitSeq
+}
+
 func allBitSeqs(n int) [][]int{
 	var bitSeqs [][]int
+	if( n < 1 ){
+		return bitSeqs
+	}
 	numOfBin := int(math.Pow(2,float64(n))) // The total number of binary sequences that will need to be appeneded on to bitSeqs
-	fmt.Println(numOfBin)
 	for x:=0 ; x<numOfBin ; x++{
-		var row []int
-		for y:=0 ; y<n ; y++{
-			row = append(row, 0)
-		}
-		bitSeqs = append(bitSeqs, row)
+		bitSeqs = append(bitSeqs, binBitSeq(x, n))
 	}
 	return bitSeqs
 }
@@ -220,5 +236,5 @@ func main() {
 	test = append(test,row1)
 	test = append(test,row2)
 	
-	fmt.Println(allBitSeqs(2))
+	fmt.Println(allBitSeqs(4))
 }
