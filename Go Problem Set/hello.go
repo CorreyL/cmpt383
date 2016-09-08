@@ -46,6 +46,28 @@ func countStrings(filename string) map[string]int{ // Returns a map where each p
 	return m
 }
 
+type Time24 struct {
+    hour, minute, second uint8
+}
+
+func validTime24(time Time24) bool{
+	if( (0 <= time.hour && time.hour < 24) && (0 <= time.minute && time.minute < 60) && (0 <= time.second && time.second < 60) ){
+		return true
+	}
+	return false
+}
+
+func equalsTime24(a Time24, b Time24) bool{
+	if( (a.hour == b.hour) && (a.minute == b.minute) && (a.second == b.second) ){
+		return true
+	}
+	return false
+}
+
+func lessThanTime24(a Time24, b Time24) bool{
+	
+}
+
 func main() {
 	// Question 1
 	/*
@@ -55,6 +77,7 @@ func main() {
   fmt.Println(countPrimes(user_input)) 
 	*/
 	// Question 2
+	/*
 	fmt.Printf("{")
 	m := countStrings("textfile.txt")
 	len_check := 0 // Ensures that the string ", " is not printed for the final pair
@@ -66,4 +89,23 @@ func main() {
 		len_check++
 	}
 	fmt.Printf("}")
+	*/
+	var valid_time Time24
+	var valid_time2 Time24
+	var invalid_time Time24
+	
+	valid_time.hour = 12 // All values within the range to be a valid time
+	valid_time.minute = 30
+	valid_time.second = 45
+	
+	invalid_time.hour = 25 // All values exceed the allowed values to be a valid time
+	invalid_time.minute = 61
+	invalid_time.second = 61
+	
+	valid_time2.hour = 12 // To test equalsTime24()
+	valid_time2.minute = 30
+	valid_time2.second = 45
+	
+	fmt.Println( equalsTime24(valid_time, valid_time2) )
+	fmt.Println( equalsTime24(valid_time, invalid_time) )
 }
