@@ -89,8 +89,8 @@ func lessThanTime24(a Time24, b Time24) bool{
 
 func minTime24(times []Time24) (Time24, error){
 	var noError error
-	noError = errors.New("")
-	if(len(times) == 0){
+	noError = errors.New("nil")
+	if(len(times) == 0){ // If times has no arguments
 		var zeroTime Time24
 		var err error
 		
@@ -101,12 +101,12 @@ func minTime24(times []Time24) (Time24, error){
 		err = errors.New("The argument passed in is empty.")
 		
 		return zeroTime, err
-	} else if(len(times) == 1){
+	} else if(len(times) == 1){ // If times has only one argument, then it is the smallest time
 		return times[0], noError
 	}
-	track := 0
+	track := 0 // Tracks which of the arguments has the smallest time thus far
 	for x := 1; x<len(times);x++{
-		if( !lessThanTime24( times[track], times[x] ) ){
+		if( !lessThanTime24( times[track], times[x] ) ){ // Track only changes if the current tracked time is not strictly less than the one being compared to
 			track = x
 		}
 	}
