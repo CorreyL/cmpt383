@@ -116,12 +116,9 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing minTime24
-	var oneTime Time24
-	oneTime.hour = 1
-	oneTime.minute = 1
-	oneTime.second = 1
+	oneTime := Time24{hour: 1, minute: 1, second: 1}
 	var retVal Time24
-	retVal, _ = minTime24(times)
+	retVal, _ = minTime24(times) // Expecting to return 01:01:01
 	if ( retVal != oneTime ){
 		t.Error(
 			"For ", times,
@@ -129,5 +126,60 @@ func TestTime24(t *testing.T){
 			"Got ", retVal,
 		)
 	}
+	
+	var emptyTimes []Time24 // Testing to see if an empty slice of Time24 returns 00:00:00
+	var zeroTime Time24
+	zeroTime.hour = 0
+	zeroTime.minute = 0
+	zeroTime.second = 0
+	retVal, _ = minTime24(emptyTimes)
+	if( retVal != zeroTime ){
+		t.Error(
+			"For ", emptyTimes,
+			"Expected ", zeroTime,
+			"Got ", retVal,
+		)
+	}
 }
 
+	
+// Question 4
+func TestMethods(t *testing.T){
+	// Testing String()
+	var expected string
+	expected = "05:39:08"
+	time := Time24{hour: 5, minute: 39, second: 8}
+	
+	if ( time.String() != expected ){
+		t.Error(
+			"For ", time,
+			"Expected ", expected,
+			"Got ", time.String(),
+		)
+	}
+	
+	//Testing AddOneHour()
+	AOH_time := Time24{hour: 20, minute: 15, second: 0}
+	for x := 21; x < 25; x++ {
+		AOH_time.AddOneHour()
+		if( x < 24 && int(AOH_time.hour) != x ){
+			t.Error(
+				"For ", AOH_time,
+				"Expected ", x,
+				"Got ", AOH_time.hour,
+			)
+		} else if( x == 24 && int(AOH_time.hour) != 0 ) {
+			t.Error(
+				"For ", AOH_time,
+				"Expected ", 0,
+				"Got ", AOH_time.hour,
+			)
+		}
+	}
+}
+
+// Question 5
+
+func TestAllbitseqs(t *testing.T){
+	
+}
