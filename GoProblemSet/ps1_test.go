@@ -1,6 +1,7 @@
 package ps1
 
 import(
+	// "fmt"
 	"testing"
 	"strconv"
 )
@@ -181,5 +182,23 @@ func TestMethods(t *testing.T){
 // Question 5
 
 func TestAllbitseqs(t *testing.T){
-	
+	var expected = [][][]int{
+		{ {0},{1} },
+		{ {0,0}, {0,1}, {1,0}, {1,1} },
+		{ {0,0,0}, {0,0,1}, {0,1,0}, {0,1,1}, {1,0,0}, {1,0,1}, {1,1,0}, {1,1,1} },
+	}
+	for x:=0; x<len(expected); x++{
+		retVal := allBitSeqs(x+1)
+		for y:=0; y<len(retVal);y++ {
+			for z:=0; z<len(retVal[0]); z++{
+				if( retVal[y][z] != expected[x][y][z] ){
+					t.Error(
+						"For allBitSeqs(", x, ")",
+						"Expected ", expected[x],
+						"Got ", retVal,
+					)
+				}
+			}
+		}
+	}
 }
