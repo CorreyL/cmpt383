@@ -1,8 +1,8 @@
 package ps1
 
 import(
- "testing"
- "strconv"
+	"testing"
+	"strconv"
 )
 
 // Question 1
@@ -99,6 +99,35 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing lessThanTime24()
+	if ( !lessThanTime24(times[3], times[0]) ){
+		t.Error(
+			"For lessThanTime24(times[0], times[3])",
+			"Expected False",
+			"Got True",
+		)
+	}
 	
+	if ( lessThanTime24(times[0], times[3]) ){
+		t.Error(
+			"For lessThanTime24(times[3], times[0])",
+			"Expected True",
+			"Got False",
+		)
+	}
+	
+	// Testing minTime24
+	var oneTime Time24
+	oneTime.hour = 1
+	oneTime.minute = 1
+	oneTime.second = 1
+	var retVal Time24
+	retVal, _ = minTime24(times)
+	if ( retVal != oneTime ){
+		t.Error(
+			"For ", times,
+			"Expected ", times[3],
+			"Got ", retVal,
+		)
+	}
 }
 
