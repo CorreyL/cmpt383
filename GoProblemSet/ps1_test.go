@@ -193,9 +193,9 @@ func TestAllbitseqs(t *testing.T){
 			for z:=0; z<len(retVal[0]); z++{
 				if( retVal[y][z] != expected[x][y][z] ){
 					t.Error(
-						"For allBitSeqs(", x, ")",
-						"Expected ", expected[x],
-						"Got ", retVal,
+						"For allBitSeqs(", x, ")","\n",
+						"Expected \n", expected[x], "\n",
+						"Got \n", retVal,
 					)
 				}
 			}
