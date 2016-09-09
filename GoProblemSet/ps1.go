@@ -1,4 +1,4 @@
-package main
+package ps1
 import (
 	"fmt"
 	"strings"
@@ -162,79 +162,4 @@ func allBitSeqs(n int) [][]int{
 		bitSeqs = append(bitSeqs, binBitSeq(x, n))
 	}
 	return bitSeqs
-}
-
-func main() {
-	// Question 1
-	/*
-	fmt.Println("Input a number for countPrimes()")
-	var user_input int 
-	fmt.Scan(&user_input)
-  fmt.Println(countPrimes(user_input)) 
-	*/
-	// Question 2
-	/*
-	fmt.Printf("{")
-	m := countStrings("textfile.txt")
-	len_check := 0 // Ensures that the string ", " is not printed for the final pair
-	for x, y := range m { 
-		fmt.Print("\"",x,"\"",":", y)
-		if(len_check != len(m)-1){
-			fmt.Print(", ")
-		}
-		len_check++
-	}
-	fmt.Printf("}")
-	*/
-	var valid_time Time24
-	var valid_time2 Time24
-	var invalid_time Time24
-	var smallest_time Time24
-	
-	valid_time.hour = 12 // All values within the range to be a valid time
-	valid_time.minute = 30
-	valid_time.second = 45
-	
-	invalid_time.hour = 25 // All values exceed the allowed values to be a valid time
-	invalid_time.minute = 61
-	invalid_time.second = 61
-	
-	valid_time2.hour = 12 // To test equalsTime24()
-	valid_time2.minute = 30
-	valid_time2.second = 45
-	
-	smallest_time.hour = 1
-	smallest_time.minute = 1
-	smallest_time.second = 1
-	
-	/*
-	fmt.Println( equalsTime24(valid_time, valid_time2) )
-	fmt.Println( equalsTime24(valid_time, invalid_time) )
-	
-	fmt.Println( lessThanTime24(valid_time, invalid_time) )
-	fmt.Println( lessThanTime24(invalid_time, valid_time) )
-	*/
-	
-	/*
-	times := []Time24{valid_time, invalid_time, smallest_time}
-		
-	var retSmallestTime Time24
-	var errMsg error
-	
-	retSmallestTime, errMsg = minTime24(times)
-	
-	fmt.Println(retSmallestTime.hour, retSmallestTime.minute, retSmallestTime.second)
-	fmt.Println(errMsg)
-	fmt.Println(valid_time.String())
-	valid_time.AddOneHour()
-	fmt.Println(valid_time.String())
-	*/
-	
-	test := [][]int{}
-	row1 := []int{1,2,3}
-	row2 := []int{4,5,6}
-	test = append(test,row1)
-	test = append(test,row2)
-	
-	fmt.Println(allBitSeqs(4))
 }
