@@ -1,7 +1,7 @@
 package ps1
 
 import(
-	// "fmt"
+	"fmt"
 	"testing"
 	"strconv"
 )
@@ -66,6 +66,12 @@ func TestTime24(t *testing.T){
 		{1,1,1},
 	}
 	
+	var times_valid = []Time24{
+		{12, 30, 45},
+		{12, 30, 45},
+		{1,1,1},
+	}
+	
 	// Testing validTime24()
 	if( !validTime24(times[0]) ) { // Valid time passed in
 		t.Error(
@@ -119,7 +125,9 @@ func TestTime24(t *testing.T){
 	// Testing minTime24
 	oneTime := Time24{hour: 1, minute: 1, second: 1}
 	var retVal Time24
-	retVal, _ = minTime24(times) // Expecting to return 01:01:01
+	var err error
+	retVal, err = minTime24(times_valid) // Expecting to return 01:01:01
+	fmt.Println(err)
 	if ( retVal != oneTime ){
 		t.Error(
 			"For ", times,
