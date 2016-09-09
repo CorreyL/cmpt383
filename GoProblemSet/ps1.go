@@ -102,14 +102,11 @@ func lessThanTime24(a Time24, b Time24) bool{
 }
 
 func minTime24(times []Time24) (Time24, error){
-	var noError error
-	noError = errors.New("nil")
-	var zeroTime Time24
+	var noError error = errors.New("nil")
+	var zeroTime = Time24{
+		0,0,0,
+	}
 	var err error
-	
-	zeroTime.hour = 0
-	zeroTime.minute = 0
-	zeroTime.second = 0
 	if(len(times) == 0){ // If times has no arguments
 		
 		err = errors.New("The argument passed in is empty.")
