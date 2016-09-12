@@ -62,6 +62,11 @@ type Time24 struct {
 // 0 <= minute < 60
 // 0 <= second < 60
 
+func printTime24(time Time24) string{
+	var retVal string = string(time.hour) + ":" + string(time.minute) + ":" + string(time.second)
+	return retVal
+}
+
 func validTime24(time Time24) bool{
 	if( (0 <= time.hour && time.hour < 24) && (0 <= time.minute && time.minute < 60) && (0 <= time.second && time.second < 60) ){
 		return true
@@ -69,40 +74,50 @@ func validTime24(time Time24) bool{
 	return false
 }
 
-func equalsTime24(a Time24, b Time24) bool{
-	if ( !validTime24(a) || !validTime24(b) ){
-		// Throw run_time error?
+func equalsTime24(a Time24, b Time24) (bool, error){
+	var noError error = nil
+	if ( !validTime24(a) ){
+		return false, errors.New(printTime24(a) + "is an invalid time.")
+	} else if( !validTime24(b) ){
+		return false, errors.New(printTime24(b) + "is an invalid time.")
+	} else if( !validTime24(a) && !validTime24(b) ){
+		return false, errors.New("Both" + printTime24(a) + " and " + printTime24(b) + "are invalid times.")
 	}
 	if( (a.hour == b.hour) && (a.minute == b.minute) && (a.second == b.second) ){
-		return true
+		return true, noError
 	}
-	return false
+	return false, noError
 }
 
-func lessThanTime24(a Time24, b Time24) bool{
-	if ( !validTime24(a) || !validTime24(b) ){
-		// Throw run_time error?
+func lessThanTime24(a Time24, b Time24) (bool, error){
+	var noError error = nil
+	if ( !validTime24(a) ){
+		return false, errors.New(printTime24(a) + "is an invalid time.")
+	} else if( !validTime24(b) ){
+		return false, errors.New(printTime24(b) + "is an invalid time.")
+	} else if( !validTime24(a) && !validTime24(b) ){
+		return false, errors.New("Both" + printTime24(a) + " and " + printTime24(b) + "are invalid times.")
 	}
 	if( (a.hour <= b.hour) ){
 		if( a.hour != b.hour ){
-			return true
+			return true, noError
 		} else {
 			if ( a.minute <= b.minute ){
 				if( a.minute != b.minute ){
-					return true
+					return true, noError
 				}	else {
 					if( a.second < b.second ){
-						return true
+						return true, noError
 					}
 				}
 			}
 		}
 	}
-	return false
+	return false, noError
 }
 
 func minTime24(times []Time24) (Time24, error){
-	var noError error = errors.New("nil")
+	var noError error = nil
 	var zeroTime = Time24{
 		0,0,0,
 	}
@@ -125,7 +140,7 @@ func minTime24(times []Time24) (Time24, error){
 			err = errors.New("There exists an invalid time in the slice passed in.")
 			return zeroTime, err
 		}
-		if( !lessThanTime24( times[track], times[x] ) ){ // Track only changes if the current tracked time is not strictly less than the one being compared to
+		if result, _ := lessThanTime24( times[track], times[x] ); !result { // Track only changes if the current tracked time is not strictly less than the one being compared to
 			track = x
 		}
 	}
