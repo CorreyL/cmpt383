@@ -168,11 +168,19 @@ func TestTime24(t *testing.T){
 // Question 4
 func TestMethods(t *testing.T){
 	// Testing String()
-	var expected string
-	expected = "05:39:08"
+	var expected string = "05:39:08"
 	time := Time24{hour: 5, minute: 39, second: 8}
-	
 	if ( time.String() != expected ){
+		t.Error(
+			"For ", time,
+			"Expected ", expected,
+			"Got ", time.String(),
+		)
+	}
+	
+	expected = "23:59:59"
+	time = Time24{hour: 23, minute: 59, second: 59}
+		if ( time.String() != expected ){
 		t.Error(
 			"For ", time,
 			"Expected ", expected,
