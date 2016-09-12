@@ -36,8 +36,7 @@ func TestCountprimes(t *testing.T){
 
 // Question 2
 func TestCountstrings(t *testing.T){
-	var final string
-	final = ""
+	var final string = ""
 	final = final + "{"
 	len_check := 0 // Ensures that the string ", " is not printed for the final pair
 	m := countStrings("textfile.txt")
@@ -50,8 +49,7 @@ func TestCountstrings(t *testing.T){
 	}
 	final = final + "}"
 	
-	var expected string
-	expected = "{\"The\":1, \"big\":3, \"dog\":1, \"ate\":1, \"the\":1, \"apple\":1}"
+	var expected string = "{\"The\":1, \"big\":3, \"dog\":1, \"ate\":1, \"the\":1, \"apple\":1}"
 	
 	if(final != expected){
 		t.Error(
@@ -60,6 +58,20 @@ func TestCountstrings(t *testing.T){
 			"Expected ", expected,
 		)
 	}
+	
+	final = ""
+	final = final + "{"
+	len_check = 0 // Ensures that the string ", " is not printed for the final pair
+	m = countStrings("raspberryBeret.txt")
+	for x, y := range m { 
+		final = final + "\"" + x + "\"" + ":" + strconv.Itoa(y)
+		if(len_check != len(m)-1){
+			final = final + ", "
+		}
+		len_check++
+	}
+	final = final + "}"
+	expected = "{\"The\":1, \"second\":1, \"much\":1, \"think\":1, \"she\":1, \"She\":1, \"And\":1, \"warm\":1, \"her\":1, \"you\":1, \"wouldn't\":1, \"wear\":1, \"love\":1, \"wore\":1, \"in\":1, \"hand\":1, \"beret\":3, \"find\":1, \"more\":1, \"kind\":1, \"store\":1, \"if\":1, \"a\":2, \"Raspberry\":3, \"it\":1, \"was\":1, \"I\":2}"
 }
 
 // Question 3
