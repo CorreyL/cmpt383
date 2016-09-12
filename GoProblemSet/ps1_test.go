@@ -71,7 +71,7 @@ func TestCountstrings(t *testing.T){
 		len_check++
 	}
 	final = final + "}"
-	expected = "{\"The\":1, \"second\":1, \"much\":1, \"think\":1, \"she\":1, \"She\":1, \"And\":1, \"warm\":1, \"her\":1, \"you\":1, \"wouldn't\":1, \"wear\":1, \"love\":1, \"wore\":1, \"in\":1, \"hand\":1, \"beret\":3, \"find\":1, \"more\":1, \"kind\":1, \"store\":1, \"if\":1, \"a\":2, \"Raspberry\":3, \"it\":1, \"was\":1, \"I\":2}"
+	expected = "{\"The\":1, \"second\":1, \"much\":1, \"think\":1, \"she\":1, \"She\":1, \"And\":1, \"warm\":1, \"her\":1, \"you\":1, \"wouldn't\":1, \"wear\":1, \"love\":1, \"wore\":1, \"in\":1, \"hand\":1, \"beret\":3, \"find\":1, \"more\":1, \"kind\":1, \"store\":1, \"if\":1, \"a\":2, \"Raspberry\":3, \"it\":1, \"was\":1, \"I\":2}" //'
 }
 
 // Question 3
@@ -83,7 +83,7 @@ func TestTime24(t *testing.T){
 		{1,1,1},
 	}
 	
-	var times_valid = []Time24{
+	var times_valid = []Time24{ // Note that minTime24 requires that all times in the slice be valid times, thus a separate slice needed to be created
 		{12, 30, 45},
 		{12, 30, 45},
 		{1,1,1},
@@ -143,6 +143,7 @@ func TestTime24(t *testing.T){
 	oneTime := Time24{hour: 1, minute: 1, second: 1}
 	var retVal Time24
 	retVal, _ = minTime24(times_valid) // Expecting to return 01:01:01
+	// Note that minTime24 requires that all times in the slice be valid times, thus a separate slice needed to be created
 	if ( retVal != oneTime ){
 		t.Error(
 			"For ", times,
@@ -152,10 +153,7 @@ func TestTime24(t *testing.T){
 	}
 	
 	var emptyTimes []Time24 // Testing to see if an empty slice of Time24 returns 00:00:00
-	var zeroTime Time24
-	zeroTime.hour = 0
-	zeroTime.minute = 0
-	zeroTime.second = 0
+	var zeroTime = Time24{hour: 0, minute: 0, second: 0}
 	retVal, _ = minTime24(emptyTimes)
 	if( retVal != zeroTime ){
 		t.Error(
