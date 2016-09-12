@@ -19,12 +19,12 @@ func isPrime(x int) bool{ // Used in countPrimes; Returns true if the given numb
 	return true
 }
 
-func countPrimes(x int) int{ // Counts the number of Prime Numbers from all values 1:x (not-inclusive)
+func countPrimes(x int) int{ // Counts the number of Prime Numbers from all values 1:x+1
 	var total = 0
 	if(x<0){
 		return total
 	}
-	for a:=x-1;a>1;a--{
+	for a:=x;a>1;a--{
 		if( isPrime(a) ){
 			total++
 		}

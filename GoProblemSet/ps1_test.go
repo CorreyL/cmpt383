@@ -16,6 +16,11 @@ func TestCountprimes(t *testing.T){
 		{4, 2},
 		{10000, 1229},
 		{-6, 0},
+		// Own test cases
+		{5, 3},
+		{7, 4},
+		{11, 5},
+		{13, 6},
 	}
 	for _, pair := range tests {
 		v := countPrimes(pair.value)
