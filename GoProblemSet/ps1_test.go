@@ -39,7 +39,7 @@ func TestCountstrings(t *testing.T){
 	var final string = ""
 	final = final + "{"
 	len_check := 0 // Ensures that the string ", " is not printed for the final pair
-	m := countStrings("textfile.txt")
+	m, _ := countStrings("textfile.txt")
 	for x, y := range m { 
 		final = final + "\"" + x + "\"" + ":" + strconv.Itoa(y)
 		if(len_check != len(m)-1){
@@ -62,7 +62,7 @@ func TestCountstrings(t *testing.T){
 	final = ""
 	final = final + "{"
 	len_check = 0 // Ensures that the string ", " is not printed for the final pair
-	m = countStrings("raspberryBeret.txt")
+	m, _ = countStrings("raspberryBeret.txt")
 	for x, y := range m { 
 		final = final + "\"" + x + "\"" + ":" + strconv.Itoa(y)
 		if(len_check != len(m)-1){

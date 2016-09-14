@@ -1,6 +1,6 @@
 package ps1
 import (
-	"fmt"
+	// "fmt"
 	"strings"
 	"errors"
 	"io/ioutil"
@@ -34,23 +34,22 @@ func countPrimes(x int) int{ // Counts the number of Prime Numbers from all valu
 
 // Question 2
 
-func countStrings(filename string) map[string]int{ // Returns a map where each pair is a word and the number of time it occurs in the text file
+func countStrings(filename string) (map[string]int, error){ // Returns a map where each pair is a word and the number of time it occurs in the text file
 	m := make(map[string]int)
 	b, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Print(err)
-	}
-	str := string(b)
-	var words []string
-	words = strings.Fields(str) // Store the contents of the file in a slice
-	for _,element := range words{
-		if(m[element] == 0){
-			m[element] = 1
-		} else{
-			m[element] = m[element] + 1
+	if err == nil {
+		str := string(b)
+		var words []string
+		words = strings.Fields(str) // Store the contents of the file in a slice
+		for _,element := range words{
+			if(m[element] == 0){
+				m[element] = 1
+			} else{
+				m[element] = m[element] + 1
+			}
 		}
 	}
-	return m
+	return m, err
 }
 
 // Question 3
