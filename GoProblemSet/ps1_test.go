@@ -107,14 +107,14 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing equalsTime24()
-	if result, _ := equalsTime24(times[0], times[1]); !result { // Equal times passed in
+	if result := equalsTime24(times[0], times[1]); !result { // Equal times passed in
 		t.Error(
 			"For ", times[0], "and ", times[1],
 			"Expected True",
 			"Got False",
 		)
 	}
-	if result, _ := equalsTime24(times[0], times[3]); result { // Unequal times passed in
+	if result := equalsTime24(times[0], times[3]); result { // Unequal times passed in
 		t.Error(
 			"For ", times[0], "and ", times[3],
 			"Expected True",
@@ -123,7 +123,7 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing lessThanTime24()
-	if result, _ := lessThanTime24(times[3], times[0]); !result{
+	if result := lessThanTime24(times[3], times[0]); !result{
 		t.Error(
 			"For lessThanTime24(times[0], times[3])",
 			"Expected False",
@@ -131,7 +131,7 @@ func TestTime24(t *testing.T){
 		)
 	}
 	
-	if result, _ := lessThanTime24(times[0], times[3]); result {
+	if result := lessThanTime24(times[0], times[3]); result {
 		t.Error(
 			"For lessThanTime24(times[3], times[0])",
 			"Expected True",

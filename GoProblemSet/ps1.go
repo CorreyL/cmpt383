@@ -69,44 +69,44 @@ func validTime24(time Time24) bool{
 	return false
 }
 
-func equalsTime24(a Time24, b Time24) (bool, error){
+func equalsTime24(a Time24, b Time24) bool{
 	if ( !validTime24(a) ){
-		return false, errors.New(a.String() + "is an invalid time.")
+		panic(a.String() + "is an invalid time.")
 	} else if( !validTime24(b) ){
-		return false, errors.New(b.String() + "is an invalid time.")
+		panic(b.String() + "is an invalid time.")
 	} else if( !validTime24(a) && !validTime24(b) ){
-		return false, errors.New("Both" + a.String() + " and " + b.String() + "are invalid times.")
+		panic("Both" + a.String() + " and " + b.String() + "are invalid times.")
 	}
 	if( (a.hour == b.hour) && (a.minute == b.minute) && (a.second == b.second) ){
-		return true, nil
+		return true
 	}
-	return false, nil
+	return false
 }
 
-func lessThanTime24(a Time24, b Time24) (bool, error){
+func lessThanTime24(a Time24, b Time24) bool{
 	if ( !validTime24(a) ){
-		return false, errors.New(a.String() + "is an invalid time.")
+		panic(a.String() + "is an invalid time.")
 	} else if( !validTime24(b) ){
-		return false, errors.New(b.String() + "is an invalid time.")
+		panic(b.String() + "is an invalid time.")
 	} else if( !validTime24(a) && !validTime24(b) ){
-		return false, errors.New("Both" + a.String() + " and " + b.String() + "are invalid times.")
+		panic("Both" + a.String() + " and " + b.String() + "are invalid times.")
 	}
 	if( (a.hour <= b.hour) ){
 		if( a.hour != b.hour ){
-			return true, nil
+			return true
 		} else {
 			if ( a.minute <= b.minute ){
 				if( a.minute != b.minute ){
-					return true, nil
+					return true
 				}	else {
 					if( a.second < b.second ){
-						return true, nil
+						return true
 					}
 				}
 			}
 		}
 	}
-	return false, nil
+	return false
 }
 
 func minTime24(times []Time24) (Time24, error){
@@ -132,7 +132,7 @@ func minTime24(times []Time24) (Time24, error){
 			err = errors.New("There exists an invalid time in the slice passed in.")
 			return zeroTime, err
 		}
-		if result, _ := lessThanTime24( times[track], times[x] ); !result { // Track only changes if the current tracked time is not strictly less than the one being compared to
+		if result := lessThanTime24( times[track], times[x] ); !result { // Track only changes if the current tracked time is not strictly less than the one being compared to
 			track = x
 		}
 	}
