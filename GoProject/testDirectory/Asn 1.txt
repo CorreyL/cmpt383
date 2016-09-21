@@ -1,0 +1,264 @@
+Pg. 8
+0.1: a,b,c,d,g,i,k,o,p,q
+
+f = O(g) "f <= g"
+f = Omega(g) "g = O(f) == g <= f"
+f = Theta(g) "f = g"
+
+a) n - 100 = n - 200
+f = Theta(g)
+
+b) n^1/2 <= n^2/3
+f = O(g)
+
+c) 100n + log(n) = n + (log n)^2
+f = Theta(g)
+
+d) n log(n) = 10n*log(10n)
+f = Theta(g)
+
+g) n^1.01 _ n*(log(n)^2)
+f = O(g)
+
+i) n^0.1 <= (log(n))^10
+f = O(g)
+
+k) n^(1/2) _ (log n)^3
+
+o) n! _ 2^n **
+f = Omega(g)
+
+p) log(n)^(log(n)) _ 2^(lg(n)^2)
+
+q) Sum of the values i {1:n} where i^k _ n^(k+1)
+f = Omega(g)
+
+0.3: a
+Base Case: n = 6
+	F_6 = F_5 + F_4 = 5 + 3 = 8
+
+	F_5 = F_4 + F_3 = 3 + 2 = 5
+
+	F_4 = F_3 + F_2 = 2 + 1 = 3
+
+	F_3 = F_2 + F_1 = F_2 + 1 = 1 + 1 = 2
+
+	F_2 = F_1 + F_0 = 1 + 0 = 1
+
+Assume that this holds for all values to x, where x > 6
+
+Then for the value x + 1, we see:
+
+	F_x+1 >= 2^(0.5*(x+1))
+
+We know that F_x+1 = F_x + F_x-1
+	
+	F_x + F_x-1 >= 2^(0.5*x + 0.5)
+	
+For both F_x and F_x-1, we know that (by induction) they are at least 2^(0.5*x) and 2^(0.5*(x-1)), repsectively.
+
+	2^(0.5x) + 2^(0.5x - 0.5) >= 2^(0.5x + 0.5)
+
+Irrefutably, 2^(0.5x) + 2^(0.5x - 0.5) is atleast equal to 2^(0.5x + 0.5), thus F_x+1 >= 2^(0.5*(x+1)) holds
+
+0.4: a,b
+
+a)
+
+Lets use these two matrices as our 2x2 matrices in question
+
+1 2  1 2
+3 4  3 4
+
+Matrix multiplcation is performed by multiplying every row's entry with every column's entry, thus
+
+1 * 1 = 1
+
+2 * 3 = 6
+
+1 * 2 = 2
+
+2 * 4 = 8
+
+3 * 1 = 3
+
+4 * 3 = 12
+
+3 * 2 = 6
+
+3 * 4 = 12
+
+The above is our 8 multiplcatiosn that we need. Subsequently, we just sum every 2 products to get our answer.
+
+1+6  2+8
+3+12 6+12
+
+7  10
+15 18
+
+b) 
+
+0 1  0 1  =  1 1
+1 1  1 1		 1 2
+
+1 1  0 1  =  1 2
+1 2	 1 1		 2 3
+
+1 2	 0 1	=	 2 3
+2 3	 1 1		 3 5
+
+2 3  0 1  =  3 5
+3 5  1 1		 5 8
+
+3 5  0 1	=	 5 8
+5 8	 1 1		 8 13
+
+5 8	 0 1	=	 8 13 
+8 13 1 1		13 21
+
+8  13	 0 1 = 13 21
+13 21	 1 1	 21 34
+
+Suggested to read the whole Question.
+
+Pg. 38
+1.2, 1.4, 1.10, 1.12, 1.18, 1.19, 1.20i and ii
+
+1.2)
+The greatest decimal integer is 9, thus
+9
+1001
+0
+
+99
+1100011
+-1
+
+999
+1111100111
+-2
+
+9999
+10011100001111
+-2
+
+99999
+11000011010011111
+-3
+
+999999
+11110100001000111111
+-4
+
+9999999
+100110001001011001111111
+-4
+
+99999999
+101111101011110000011111111
+-5
+
+999999999
+111011100110101100100111111111
+-6
+
+9999999999
+1001010100000010111110001111111111
+-6
+
+Note that at each addition of a new decimal place, the length of the corresponding binary number is getting smaller than 4x the size of the decimal value.
+Let d be the length of the decimal value
+Let b be the length of the binary value
+
+4*d - b_d <= 4*(d+1) - b_(d+1)
+
+The ratio of d/b is roughly 0.3
+
+1.4)
+
+Upper Bound: n! = O(n^n)
+
+For n = 1, n! = n^n. For n > 1, n^n > n!, thus n^n is an upper bound on n!
+
+Lower Bound: n! = Omega( (n/2)^(n/2) )
+
+For n = 0, n! = (n/2)^(n/2) = 0. For n > 0, n! > (n/2)^(n/2), thus (n/2)^(n/2) is a lower bound on n!
+
+
+
+1.10) // May need a formal proof?
+
+Let N = 8
+Let a = 18
+Let b = 26
+
+a Cong b mod 8 
+	since 18 mod 8 = 26 mod 8 = 2
+
+Let M = 4
+
+Since 8/4 = 2, M divides N
+
+a Cong b mod 4
+	since 18 mod 4 = 26 mod 4 = 2
+	
+---
+
+We know that a mod N = b mod N, hence a Cong b (mod N)
+
+We also know that N mod M = 0, since M divides N
+
+This means that M is a factor of N ...
+	
+1.12) 2^(2^2006) mod 3
+For all 2^n
+if ( n is even ){
+	2^n mod 3 = 1
+}
+if ( n is odd ){
+	2^n mod 3 = 2
+}
+
+We know that 2^x, for any value of x, is even.
+
+By the above, 2^2006 is even.
+
+Since it is even, it stands that 2^(2^2006) mod 3 = 1.
+
+1.18)
+
+gcd(210, 588) using Prime Factorization:
+210 = 5 * 42 = 5 * 2 * 21 = 5 * 2 * 7 * 3
+588 = 294 * 2 = 147 * 2 * 2 = 49 * 3 * 2 * 2 = 7 * 7 * 3 * 2 * 2
+
+The common primes amongst the two sets is {2, 3, 7}.
+
+2 * 3 * 7 = 42
+
+gcd(210, 588) using Euclid's Algorithm:
+
+function Euclid(int a, int b)
+	assert(a >= b && a >= 0 && b >= 0 )
+	if( b == 0 ) return a
+	else return Euclid( b, a % b )
+	
+Euclid(588, 210)
+	Euclid(210, 168) // 588 mod 210 is 168
+		Euclid(168, 42) // 210 mod 168 is 42
+			Euclid(42, 0) // 168 mod 42 is 0
+				return 42
+				
+1.19)
+
+In the base case of n = 1:
+
+gcd(1, 0) = 1
+
+Assume that for all cases up to and including x, this holds true.
+
+Then for the case of x + 1:
+gcd(F_x+1, F_x)
+
+0 1 1 2 3 5 8 13 21 34 55 89 144
+
+1.25, 1.27, 1.38, 1.42, 1.43
