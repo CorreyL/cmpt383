@@ -10,7 +10,7 @@ import (
 	"encoding/hex"
 	"path/filepath"
 	"regexp"
-	"strings"
+	// "strings"
 )
 
 // os.Args[0] is the name of the program
@@ -27,18 +27,16 @@ func errorCheck(e error){
 	}
 }
 
+/*
+// May need this later; it pulls just the filename out
+split := strings.Split(path, "/")
+newPath := strings.TrimSpace(split[len(split)-1])
+fmt.Println("The newPath is: ", newPath)
+*/
+
 func visit(path string, f os.FileInfo, err error) error {
-	/*
-	hasher := sha256.New()
-	s, err2 := os.Open(path)
-	errorCheck(err2)
-	if _, err2 := io.Copy(hasher, s); err2 != nil{
-		panic(err2)
-	}
-	currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
-	*/
 	r, _ := regexp.Compile(`\.[a-zA-Z0-9]+`) // Regular Expression for the string of a file
-	fmt.Println("Testing: ", r.MatchString(path))
+	fmt.Println("Testing: ", path, " ", r.MatchString(path))
 	if(r.MatchString(path)){
 		fmt.Printf("Visited: %s\n", path)
 		hasher := sha256.New()
@@ -47,26 +45,22 @@ func visit(path string, f os.FileInfo, err error) error {
 		if _, err2 := io.Copy(hasher, s); err2 != nil{
 			panic(err2)
 		}
-		split := strings.Split(path, "/")
-		newPath := strings.TrimSpace(split[len(split)-1])
-		fmt.Println("The newPath is: ", newPath)
-		currentDirFiles[newPath] = hex.EncodeToString(hasher.Sum(nil))
+		if _, exist := currentDirFiles[hex.EncodeToString(hasher.Sum(nil))]; exist{
+			currentDirFiles[hex.EncodeToString(hasher.Sum(nil))] = currentDirFiles[hex.EncodeToString(hasher.Sum(nil))]+"|"+path
+		} else{
+			currentDirFiles[hex.EncodeToString(hasher.Sum(nil))] = path
+		}
 	}
   return nil
 }
 
 func main(){
-	hasher := sha256.New()
+	// hasher := sha256.New()
 	root := os.Args[1]
 	err := filepath.Walk(root, visit)
-	s, err := os.Open("asn1.txt")
 	errorCheck(err)
-	defer s.Close()
-	if _, err := io.Copy(hasher, s); err != nil{
-		panic(err)
-	}
-	fmt.Println(hex.EncodeToString(hasher.Sum(nil)))
 	fmt.Println("filepath.Walk() returned %v\n", err)
 	fmt.Println(currentDirFiles)
+	// err = os.Remove("testDirectory/Asn 1.txt")
 }
 
