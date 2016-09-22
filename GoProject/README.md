@@ -1,0 +1,1 @@
+The purpose of this project was to elaborate on the knowledge gained in CMPT 383 about the Go programming language to create a program that would traverse a given directory and its sub-directories, and outputting all the duplicate files it found to the console.
