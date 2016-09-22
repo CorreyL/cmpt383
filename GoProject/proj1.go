@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"encoding/hex"
 	"path/filepath"
-	// "regexp"
 	"strings"
 )
 
