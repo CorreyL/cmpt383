@@ -18,7 +18,7 @@ import (
 	
 // Use map to store current directory of files, then use a another data structure to store directories?
 
-var currentDirFiles map[string]string  // A map of the current directory's files, wherein keys are stored as Filename : SHA256-Code
+var currentDirFiles map[string]string = make(map[string]string)  // A map of the current directory's files, wherein keys are stored as Filename : SHA256-Code
 
 func errorCheck(e error){
 	if(e != nil){
@@ -36,10 +36,17 @@ func visit(path string, f os.FileInfo, err error) error {
 	}
 	currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
 	*/
-	r, _ := regexp.Compile(`\.[a-zA-Z]+`) // Regular Expression for the string of a file
+	r, _ := regexp.Compile(`\.[a-zA-Z0-9]+`) // Regular Expression for the string of a file
 	fmt.Println("Testing: ", r.MatchString(path))
 	if(r.MatchString(path)){
 		fmt.Printf("Visited: %s\n", path)
+		hasher := sha256.New()
+		s, err2 := os.Open(path)
+		errorCheck(err2)
+		if _, err2 := io.Copy(hasher, s); err2 != nil{
+			panic(err2)
+		}
+		currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
 	}
   return nil
 }
@@ -55,6 +62,7 @@ func main(){
 		panic(err)
 	}
 	fmt.Println(hex.EncodeToString(hasher.Sum(nil)))
-	fmt.Printf("filepath.Walk() returned %v\n", err)
+	fmt.Println("filepath.Walk() returned %v\n", err)
+	fmt.Println(currentDirFiles)
 }
 
