@@ -9,11 +9,16 @@ import (
 	"io"
 	"encoding/hex"
 	"path/filepath"
+	"regexp"
 )
 
 // os.Args[0] is the name of the program
 // os.Args[1] is the first argument passed into the program
 	// os.Args[1] will be the directory of that the program will work in
+	
+// Use map to store current directory of files, then use a another data structure to store directories?
+
+var currentDirFiles map[string]string  // A map of the current directory's files, wherein keys are stored as Filename : SHA256-Code
 
 func errorCheck(e error){
 	if(e != nil){
@@ -22,7 +27,20 @@ func errorCheck(e error){
 }
 
 func visit(path string, f os.FileInfo, err error) error {
-  fmt.Printf("Visited: %s\n", path)
+	/*
+	hasher := sha256.New()
+	s, err2 := os.Open(path)
+	errorCheck(err2)
+	if _, err2 := io.Copy(hasher, s); err2 != nil{
+		panic(err2)
+	}
+	currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
+	*/
+	r, _ := regexp.Compile(`\.[a-zA-Z]{2,3}`) // Regular Expression for the string of a file
+	fmt.Println("Testing: ", r.MatchString(path))
+	if(r.MatchString(path)){
+		fmt.Printf("Visited: %s\n", path)
+	}
   return nil
 }
 
@@ -36,18 +54,7 @@ func main(){
 	if _, err := io.Copy(hasher, s); err != nil{
 		panic(err)
 	}
-	os.Stdout.WriteString(hex.EncodeToString(hasher.Sum(nil)))
+	fmt.Println(hex.EncodeToString(hasher.Sum(nil)))
 	fmt.Printf("filepath.Walk() returned %v\n", err)
 }
-
-/*
-f, err := os.Open(os.Args[1])
-if err != nil {
-    log.Fatal(err)
-}
-defer f.Close()
-if _, err := io.Copy(hasher, f); err != nil {
-    log.Fatal(err)
-}
-*/ // Supposedly handles bigger files better?
 
