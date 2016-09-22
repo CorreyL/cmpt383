@@ -1,4 +1,3 @@
-// package proj1
 package main
 
 import (
@@ -6,20 +5,13 @@ import (
 	"crypto/sha256"
 	"os"
 	"io/ioutil"
-	//"io"
 	"encoding/hex"
 	"path/filepath"
-	"regexp"
+	// "regexp"
 	"strings"
 )
 
-// os.Args[0] is the name of the program
-// os.Args[1] is the first argument passed into the program
-	// os.Args[1] will be the directory of that the program will work in
-	
-// Use map to store current directory of files, then use a another data structure to store directories?
-
-var currentDirFiles map[string]string = make(map[string]string)  // A map of the current directory's files, wherein keys are stored as Filename : SHA256-Code
+var currentDirFiles map[string]string = make(map[string]string)  // A map of the current directory's files, wherein entries are stored as SHA256-Code : Filename|Filename|...
 
 func errorCheck(e error){
 	if(e != nil){
@@ -27,16 +19,10 @@ func errorCheck(e error){
 	}
 }
 
-/*
-// May need this later; it pulls just the filename out
-split := strings.Split(path, "/")
-newPath := strings.TrimSpace(split[len(split)-1])
-fmt.Println("The newPath is: ", newPath)
-*/
-
 func visit(path string, fi os.FileInfo, err error) error {
-	r, _ := regexp.Compile(`\.[a-zA-Z0-9]+`) // Regular Expression for the string of a file
-	if(r.MatchString(path)){
+	checkDir, retErr := os.Stat(path)
+	errorCheck(retErr)
+	if( !checkDir.IsDir() ){
 		hasher := sha256.New()
 		s, err := ioutil.ReadFile(path)
 		hasher.Write(s)
@@ -58,11 +44,11 @@ func main(){
 	}
 	err := filepath.Walk(os.Args[1], visit)
 	errorCheck(err)
-	if( len(currentDirFiles) == 0 ){ // Checks to see if anything was added to the map
+	if( len(currentDirFiles) == 0 ){ // Checks to see if the directory exitsed or if anything was added to the map
 		fmt.Println("The directory provided either does not exist OR contains no files.")
 		os.Exit(0)
 	}
-	noDups := true;
+	noDups := true // If noDups is not changed, then the directory and all sub-directories have no duplicate files
 	for x, y := range currentDirFiles {
 		if( strings.IndexAny(y,"|") != -1 ){
 			noDups = false;
