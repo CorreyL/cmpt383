@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"crypto/sha256"
 	"os"
-	// "io/ioutil"
-	"io"
+	"io/ioutil"
+	//"io"
 	"encoding/hex"
 	"path/filepath"
 	"regexp"
-	// "strings"
+	"strings"
 )
 
 // os.Args[0] is the name of the program
@@ -34,17 +34,13 @@ newPath := strings.TrimSpace(split[len(split)-1])
 fmt.Println("The newPath is: ", newPath)
 */
 
-func visit(path string, f os.FileInfo, err error) error {
+func visit(path string, h os.FileInfo, err error) error {
 	r, _ := regexp.Compile(`\.[a-zA-Z0-9]+`) // Regular Expression for the string of a file
-	fmt.Println("Testing: ", path, " ", r.MatchString(path))
 	if(r.MatchString(path)){
-		fmt.Printf("Visited: %s\n", path)
 		hasher := sha256.New()
-		s, err2 := os.Open(path)
-		errorCheck(err2)
-		if _, err2 := io.Copy(hasher, s); err2 != nil{
-			panic(err2)
-		}
+		s, err := ioutil.ReadFile(path)
+		hasher.Write(s)
+		errorCheck(err);
 		if _, exist := currentDirFiles[hex.EncodeToString(hasher.Sum(nil))]; exist{
 			currentDirFiles[hex.EncodeToString(hasher.Sum(nil))] = currentDirFiles[hex.EncodeToString(hasher.Sum(nil))]+"|"+path
 		} else{
@@ -55,12 +51,27 @@ func visit(path string, f os.FileInfo, err error) error {
 }
 
 func main(){
-	// hasher := sha256.New()
-	root := os.Args[1]
-	err := filepath.Walk(root, visit)
+	if( len(os.Args) < 2 ){
+		fmt.Println("ERROR: A directory was not supplied to proj1.go.")
+		fmt.Println("Aborting program.")
+		os.Exit(1)
+	}
+	err := filepath.Walk(os.Args[1], visit)
 	errorCheck(err)
-	fmt.Println("filepath.Walk() returned %v\n", err)
-	fmt.Println(currentDirFiles)
-	// err = os.Remove("testDirectory/Asn 1.txt")
+	if( len(currentDirFiles) == 0 ){
+		fmt.Println("The directory provided either does not exist OR contains no files")
+		os.Exit(0)
+	}
+	for x, y := range currentDirFiles {
+		if( strings.IndexAny(y,"|") != -1 ){
+			split := strings.Split(y, "|")
+			fmt.Println("SHA-256 KEY:", x)
+			fmt.Println("Number of files with this signature:", len(split) )
+			for i := range split{
+				fmt.Println("	", split[i])
+			}
+			fmt.Printf("\n\n")
+		}
+	}
 }
 
