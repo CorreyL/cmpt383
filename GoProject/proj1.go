@@ -14,15 +14,17 @@ var currentDirFiles map[string]string = make(map[string]string)  // A map of the
 
 func errorCheck(e error){
 	if(e != nil){
+		panic(e)
+	}
+}
+
+func traverse(path string, fi os.FileInfo, err error) error {
+	checkDir, retErr := os.Stat(path)
+	if( retErr != nil ){
 		fmt.Println("ERROR: The directory inputted does not exist.")
 		fmt.Println("Aborting program.")
 		os.Exit(2)
 	}
-}
-
-func visit(path string, fi os.FileInfo, err error) error {
-	checkDir, retErr := os.Stat(path)
-	errorCheck(retErr)
 	if( !checkDir.IsDir() ){
 		hasher := sha256.New()
 		s, err := ioutil.ReadFile(path)
@@ -43,7 +45,7 @@ func main(){
 		fmt.Println("Aborting program.")
 		os.Exit(2)
 	}
-	err := filepath.Walk(os.Args[1], visit)
+	err := filepath.Walk(os.Args[1], traverse)
 	errorCheck(err)
 	if( len(currentDirFiles) == 0 ){ // Checks to see if the directory had any files
 		fmt.Println("The directory provided contains no files.")
