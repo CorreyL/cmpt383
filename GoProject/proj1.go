@@ -36,7 +36,7 @@ func visit(path string, f os.FileInfo, err error) error {
 	}
 	currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
 	*/
-	r, _ := regexp.Compile(`\.[a-zA-Z]{2,3}`) // Regular Expression for the string of a file
+	r, _ := regexp.Compile(`\.[a-zA-Z]+`) // Regular Expression for the string of a file
 	fmt.Println("Testing: ", r.MatchString(path))
 	if(r.MatchString(path)){
 		fmt.Printf("Visited: %s\n", path)
