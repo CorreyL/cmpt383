@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"path/filepath"
 	"regexp"
+	"strings"
 )
 
 // os.Args[0] is the name of the program
@@ -46,7 +47,10 @@ func visit(path string, f os.FileInfo, err error) error {
 		if _, err2 := io.Copy(hasher, s); err2 != nil{
 			panic(err2)
 		}
-		currentDirFiles[path] = hex.EncodeToString(hasher.Sum(nil))
+		split := strings.Split(path, "/")
+		newPath := strings.TrimSpace(split[len(split)-1])
+		fmt.Println("The newPath is: ", newPath)
+		currentDirFiles[newPath] = hex.EncodeToString(hasher.Sum(nil))
 	}
   return nil
 }
