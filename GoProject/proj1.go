@@ -15,7 +15,9 @@ var currentDirFiles map[string]string = make(map[string]string)  // A map of the
 
 func errorCheck(e error){
 	if(e != nil){
-		panic(e)
+		fmt.Println("ERROR: The directory inputted does not exist.")
+		fmt.Println("Aborting program.")
+		os.Exit(2)
 	}
 }
 
@@ -40,12 +42,12 @@ func main(){
 	if( len(os.Args) < 2 ){ // If a directory was provided, then len(os.Args) >= 2 
 		fmt.Println("ERROR: A directory was not supplied to proj1.go.")
 		fmt.Println("Aborting program.")
-		os.Exit(1)
+		os.Exit(2)
 	}
 	err := filepath.Walk(os.Args[1], visit)
 	errorCheck(err)
-	if( len(currentDirFiles) == 0 ){ // Checks to see if the directory exitsed or if anything was added to the map
-		fmt.Println("The directory provided either does not exist OR contains no files.")
+	if( len(currentDirFiles) == 0 ){ // Checks to see if the directory had any files
+		fmt.Println("The directory provided contains no files.")
 		os.Exit(0)
 	}
 	noDups := true // If noDups is not changed, then the directory and all sub-directories have no duplicate files
