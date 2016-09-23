@@ -1,10 +1,12 @@
 package ps1
 
 import(
-	// "fmt"
+	"fmt"
 	"testing"
 	"strconv"
 )
+
+var ToConsole bool = true
 
 // Question 1
 func TestCountprimes(t *testing.T){
@@ -22,8 +24,16 @@ func TestCountprimes(t *testing.T){
 		{11, 5},
 		{13, 6},
 	}
+	if(ToConsole){
+		fmt.Println("Begin Testing: countPrimes(x,y)")
+	}
 	for _, pair := range tests {
 		v := countPrimes(pair.value)
+		if(ToConsole){
+			fmt.Println("	Testing:", pair.value)
+			fmt.Println("	Expecting:", pair.expected)
+			fmt.Println("	countPrimes() returned:", v)
+		}
 		if v != pair.expected {
 			t.Error(
 				"For", pair.value,
@@ -32,10 +42,16 @@ func TestCountprimes(t *testing.T){
 			)
 		}
 	}
+	if(ToConsole){
+		fmt.Println("\n")
+	}
 }
 
 // Question 2
 func TestCountstrings(t *testing.T){
+	if(ToConsole){
+		fmt.Println("Begin Testing: countStrings()")
+	}
 	var final string = ""
 	final = final + "{"
 	len_check := 0 // Ensures that the string ", " is not printed for the final pair
@@ -50,7 +66,11 @@ func TestCountstrings(t *testing.T){
 	final = final + "}"
 	
 	var expected string = "{\"The\":1, \"big\":3, \"dog\":1, \"ate\":1, \"the\":1, \"apple\":1}"
-	
+	if(ToConsole){
+		fmt.Println("	Testing: textfile.txt")
+		fmt.Println("	Expecting:", expected)
+		fmt.Println("	countStrings() returned:", final)
+	}
 	if(final != expected){
 		t.Error(
 			"For textfile.txt",
@@ -58,7 +78,7 @@ func TestCountstrings(t *testing.T){
 			"Expected ", expected,
 		)
 	}
-	
+	/*
 	final = ""
 	final = final + "{"
 	len_check = 0 // Ensures that the string ", " is not printed for the final pair
@@ -72,6 +92,21 @@ func TestCountstrings(t *testing.T){
 	}
 	final = final + "}"
 	expected = "{\"The\":1, \"second\":1, \"much\":1, \"think\":1, \"she\":1, \"She\":1, \"And\":1, \"warm\":1, \"her\":1, \"you\":1, \"wouldn't\":1, \"wear\":1, \"love\":1, \"wore\":1, \"in\":1, \"hand\":1, \"beret\":3, \"find\":1, \"more\":1, \"kind\":1, \"store\":1, \"if\":1, \"a\":2, \"Raspberry\":3, \"it\":1, \"was\":1, \"I\":2}" //'
+	if(ToConsole){
+		fmt.Println("	Testing: raspberryBeret.txt")
+		fmt.Println("	Expecting:", expected)
+		fmt.Println("	countStrings() returned:", final)
+	}
+	
+	if(final != expected){
+		t.Error(
+			"For raspberryBeret.txt",
+			"Got ", final,
+			"Expected ", expected,
+		)
+	}
+	*/
+	fmt.Println("\n")
 }
 
 // Question 3
@@ -90,15 +125,29 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing validTime24()
-	if( !validTime24(times[0]) ) { // Valid time passed in
+	if(ToConsole){
+		fmt.Println("Begin Testing: validTime24()")
+	}
+	var funcRetVal = validTime24(times[0]);
+	if(ToConsole){
+		fmt.Println("	Testing:", times[0])
+		fmt.Println("	Expecting:", true)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( !funcRetVal ) { // Valid time passed in
 		t.Error(
 			"For ", times[0],
 			"Got False",
 			"Expected True",
 		)
 	}
-	
-	if( validTime24(times[2]) ){ // Invalid time passed in
+	funcRetVal = validTime24(times[2])
+	if(ToConsole){
+		fmt.Println("	Testing:", times[2])
+		fmt.Println("	Expecting:", false)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( funcRetVal ){ // Invalid time passed in
 		t.Error(
 			"For ", times[2],
 			"Got True",
@@ -107,14 +156,27 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing equalsTime24()
-	if result := equalsTime24(times[0], times[1]); !result { // Equal times passed in
+	funcRetVal = equalsTime24(times[0], times[1])
+	if(ToConsole){
+		fmt.Println("Begin Testing: equalsTime24(a Time24, b Time24)")
+		fmt.Println("	Testing:", times[0], "&", times[1])
+		fmt.Println("	Expecting:", true)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( !funcRetVal ){ // Equal times passed in
 		t.Error(
 			"For ", times[0], "and ", times[1],
 			"Expected True",
 			"Got False",
 		)
 	}
-	if result := equalsTime24(times[0], times[3]); result { // Unequal times passed in
+	funcRetVal = equalsTime24(times[0], times[3]) // Unequal times passed in
+	if(ToConsole){
+		fmt.Println("	Testing:", times[0], "&", times[3])
+		fmt.Println("	Expecting:", false)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( funcRetVal ){
 		t.Error(
 			"For ", times[0], "and ", times[3],
 			"Expected True",
@@ -123,15 +185,27 @@ func TestTime24(t *testing.T){
 	}
 	
 	// Testing lessThanTime24()
-	if result := lessThanTime24(times[3], times[0]); !result{
+	funcRetVal = lessThanTime24(times[3], times[0])
+	if(ToConsole){
+		fmt.Println("Begin Testing: lessThanTime24(a Time24, b Time24)")
+		fmt.Println("	Testing:", times[3], "&", times[0])
+		fmt.Println("	Expecting:", true)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( !funcRetVal ){
 		t.Error(
 			"For lessThanTime24(times[0], times[3])",
 			"Expected False",
 			"Got True",
 		)
 	}
-	
-	if result := lessThanTime24(times[0], times[3]); result {
+	funcRetVal = lessThanTime24(times[0], times[3])
+	if(ToConsole){
+		fmt.Println("	Testing:", times[0], "&", times[3])
+		fmt.Println("	Expecting:", false)
+		fmt.Println("	countStrings() returned:", funcRetVal)
+	}
+	if( funcRetVal ){
 		t.Error(
 			"For lessThanTime24(times[3], times[0])",
 			"Expected True",
@@ -141,27 +215,38 @@ func TestTime24(t *testing.T){
 	
 	// Testing minTime24
 	oneTime := Time24{hour: 1, minute: 1, second: 1}
-	var retVal Time24
-	retVal, _ = minTime24(times_valid) // Expecting to return 01:01:01
+	funcRetVal2, _ := minTime24(times_valid) // Expecting to return 01:01:01
+	if(ToConsole){
+		fmt.Println("Begin Testing: minTime24()")
+		fmt.Println("	Testing:", times_valid)
+		fmt.Println("	Expecting: 01:01:01", )
+		fmt.Println("	countStrings() returned:", funcRetVal2)
+	}
 	// Note that minTime24 requires that all times in the slice be valid times, thus a separate slice needed to be created
-	if ( retVal != oneTime ){
+	if ( funcRetVal2 != oneTime ){
 		t.Error(
 			"For ", times,
 			"Expected ", times[3],
-			"Got ", retVal,
+			"Got ", funcRetVal2,
 		)
 	}
 	
 	var emptyTimes []Time24 // Testing to see if an empty slice of Time24 returns 00:00:00
 	var zeroTime = Time24{hour: 0, minute: 0, second: 0}
-	retVal, _ = minTime24(emptyTimes)
-	if( retVal != zeroTime ){
+	funcRetVal2, _ = minTime24(emptyTimes)
+	if(ToConsole){
+		fmt.Println("	Testing:", emptyTimes, "(Ie. An empty array of Time24)")
+		fmt.Println("	Expecting: 00:00:00", )
+		fmt.Println("	countStrings() returned:", funcRetVal2)
+	}
+	if( funcRetVal2 != zeroTime ){
 		t.Error(
 			"For ", emptyTimes,
 			"Expected ", zeroTime,
-			"Got ", retVal,
+			"Got ", funcRetVal2,
 		)
 	}
+	fmt.Println("\n")
 }
 
 	
@@ -170,6 +255,12 @@ func TestMethods(t *testing.T){
 	// Testing String()
 	var expected string = "05:39:08"
 	time := Time24{hour: 5, minute: 39, second: 8}
+	if(ToConsole){
+		fmt.Println("Begin Testing: Time24.String()")
+		fmt.Println("	Testing: time = 05:39:08; time.String()")
+		fmt.Println("	Expecting: 05:39:08", )
+		fmt.Println("	time.String() returned:", time.String())
+	}
 	if ( time.String() != expected ){
 		t.Error(
 			"For ", time,
@@ -180,7 +271,12 @@ func TestMethods(t *testing.T){
 	
 	expected = "23:59:59"
 	time = Time24{hour: 23, minute: 59, second: 59}
-		if ( time.String() != expected ){
+	if(ToConsole){
+		fmt.Println("	Testing: time = 23:59:59; time.String()")
+		fmt.Println("	Expecting: 23:59:59", )
+		fmt.Println("	time.String() returned:", time.String())
+	}
+	if ( time.String() != expected ){
 		t.Error(
 			"For ", time,
 			"Expected ", expected,
@@ -190,8 +286,18 @@ func TestMethods(t *testing.T){
 	
 	//Testing AddOneHour()
 	AOH_time := Time24{hour: 20, minute: 15, second: 0}
+	fmt.Println("Begin Testing: Time24.AddOneHour()")
 	for x := 21; x < 25; x++ {
 		AOH_time.AddOneHour()
+		if(ToConsole){
+			fmt.Println("	Testing:", AOH_time.String())
+			if(x < 25){
+				fmt.Println("	Expecting:", strconv.Itoa(x)+":"+strconv.Itoa(int(AOH_time.minute))+":0"+strconv.Itoa(int(AOH_time.second)) )
+			}else{
+				fmt.Println("	Expecting: 0:"+strconv.Itoa(int(AOH_time.minute))+":"+strconv.Itoa(int(AOH_time.second)))
+			}
+			fmt.Println("	AOH_time.AddOneHour returned:", AOH_time)
+		}
 		if( x < 24 && int(AOH_time.hour) != x ){
 			t.Error(
 				"For ", AOH_time,
