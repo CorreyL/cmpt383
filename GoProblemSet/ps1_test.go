@@ -312,6 +312,7 @@ func TestMethods(t *testing.T){
 			)
 		}
 	}
+	fmt.Println("\n")
 }
 
 // Question 5
@@ -323,8 +324,15 @@ func TestAllbitseqs(t *testing.T){
 		{ {0,0,0}, {0,0,1}, {0,1,0}, {0,1,1}, {1,0,0}, {1,0,1}, {1,1,0}, {1,1,1} },
 		{ {0,0,0,0}, {0,0,0,1}, {0,0,1,0}, {0,0,1,1}, {0,1,0,0}, {0,1,0,1}, {0,1,1,0}, {0,1,1,1}, {1,0,0,0}, {1,0,0,1}, {1,0,1,0}, {1,0,1,1}, {1,1,0,0}, {1,1,0,1}, {1,1,1,0}, {1,1,1,1} },
 	}
+	if( ToConsole ){
+		fmt.Println("Begin Testing: allBitSeqs()")
+	}
 	for x:=0; x<len(expected); x++{
 		retVal := allBitSeqs(x+1)
+		if( ToConsole ){
+			fmt.Println("	Expecting:", expected[x])
+			fmt.Println("	allBitSeqs("+strconv.Itoa(x+1)+") returned:", retVal)
+		}
 		for y:=0; y<len(retVal);y++ {
 			for z:=0; z<len(retVal[0]); z++{
 				if( retVal[y][z] != expected[x][y][z] ){
