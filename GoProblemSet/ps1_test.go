@@ -78,7 +78,6 @@ func TestCountstrings(t *testing.T){
 			"Expected ", expected,
 		)
 	}
-	/*
 	final = ""
 	final = final + "{"
 	len_check = 0 // Ensures that the string ", " is not printed for the final pair
@@ -91,22 +90,54 @@ func TestCountstrings(t *testing.T){
 		len_check++
 	}
 	final = final + "}"
-	expected = "{\"The\":1, \"second\":1, \"much\":1, \"think\":1, \"she\":1, \"She\":1, \"And\":1, \"warm\":1, \"her\":1, \"you\":1, \"wouldn't\":1, \"wear\":1, \"love\":1, \"wore\":1, \"in\":1, \"hand\":1, \"beret\":3, \"find\":1, \"more\":1, \"kind\":1, \"store\":1, \"if\":1, \"a\":2, \"Raspberry\":3, \"it\":1, \"was\":1, \"I\":2}" //'
-	if(ToConsole){
-		fmt.Println("	Testing: raspberryBeret.txt")
-		fmt.Println("	Expecting:", expected)
-		fmt.Println("	countStrings() returned:", final)
+	expected2 := map[string]int{
+		"The":1,
+		"second":1,
+		"much":1,
+		"think":1,
+		"she":1,
+		"She":1,
+		"And":1,
+		"warm":1,
+		"her":1,
+		"you":1,
+		"wouldn't":1,
+		"wear":1,
+		"love":1,
+		"wore":1,
+		"in":1,
+		"hand":1,
+		"it":1,
+		"was":1,
+		"I":2,
+		"beret":3,
+		"if":1,
+		"find":1,
+		"more":1,
+		"store":1,
+		"kind":1,
+		"a":2,
+		"Raspberry":3,
+	}
+	fmt.Println("\nFor raspberryBeret.txt")
+	for x, y := range m{
+		if( ToConsole ){
+			fmt.Println("	Testing: ", x)
+			fmt.Println("	Expecting:", expected2[x])
+			fmt.Println("	countStrings() returned:", y)
+		}
+		if(y != expected2[x]){
+			t.Error(
+				"For ", x,
+				"Got ", y,
+				"Expected ", expected2[x],
+			)
+		}
 	}
 	
-	if(final != expected){
-		t.Error(
-			"For raspberryBeret.txt",
-			"Got ", final,
-			"Expected ", expected,
-		)
+	if( ToConsole ){
+		fmt.Println("\n")
 	}
-	*/
-	fmt.Println("\n")
 }
 
 // Question 3
@@ -246,7 +277,9 @@ func TestTime24(t *testing.T){
 			"Got ", funcRetVal2,
 		)
 	}
-	fmt.Println("\n")
+	if( ToConsole ){
+		fmt.Println("\n")
+	}
 }
 
 	
@@ -286,7 +319,9 @@ func TestMethods(t *testing.T){
 	
 	//Testing AddOneHour()
 	AOH_time := Time24{hour: 20, minute: 15, second: 0}
-	fmt.Println("Begin Testing: Time24.AddOneHour()")
+	if( ToConsole ){
+		fmt.Println("Begin Testing: Time24.AddOneHour()")
+	}
 	for x := 21; x < 25; x++ {
 		AOH_time.AddOneHour()
 		if(ToConsole){
@@ -312,7 +347,9 @@ func TestMethods(t *testing.T){
 			)
 		}
 	}
-	fmt.Println("\n")
+	if( ToConsole ){
+		fmt.Println("\n")
+	}
 }
 
 // Question 5
